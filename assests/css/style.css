@@ -1,0 +1,15 @@
+.card-text{
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    
+}
+
+body, html{
+   
+    background: url(".\images\bg-sandy-yellow.jpg");
+    background-color: blanchedalmond;
+}
+
+h1{
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
