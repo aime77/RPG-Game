@@ -18,33 +18,51 @@
 </head>
 
 <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">RPG Superheroes Game</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="#">How to play? <span class="sr-only">(current)</span></a>
-                    </li>
-                    
-              </nav>
-    <h1 class="py-4 text-center">Superheroes vs. SUPERHEROE</h1>
-    <div class="container"> 
-    <div class="row">
-    <div class="col-12" id="container_1"></div>
-        <div class="row">
-    <div class="card col-6 border border-primary mx-2 my-1" style="width: 18rem;">
-            <div class="card-body p-0" id="name1">
-                <p class="card-text"></p>
-            </div>
-            <div id="img1"></div>
-            <div class="card-body cb p-0">
-                <p class="card-text" id="hp1"></p>
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">RPG Superheroes Game</a>
+
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <button class="open">How to play</button>
+                </li>
+
+    </nav>
+
+    <div class="popup-overlay col-4-lg col-6-md col-12-sm py-1 container">
+        <!--Creates the popup content-->
+        <div class="popup-content m-7">
+            <h2>INSTRUCTIONS</h2>
+
+            <P>Choose your favorite hero and then your least favorite hero to fight against.</P>
+            <p>Attack your oponents by pressing the "Attack" button.</p>
+            <p>If you defeat your oponent, select another oponent to attack.</p>
+            <p>You won when you're the last hero standing.</p>
+
+            <p>SOUND: If you want to add sentiment to your experience, hover over the left bottom area of the screen. You will
+                find a audio control to play awesome music for heroes!</p>
+            <button class="close">Close</button>
         </div>
-        <div class="card col-6 border border-primary mx-2 my-1" style="width: 18rem;">
+    </div>
+
+    <h1 class="py-4 text-center">Superheroes vs. SUPERHEROE</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-12" id="container_0 py-3">
+            </div>
+
+            <div class="col-12" id="container_1"></div>
+
+            <div class="card col-4 border border-primary mx-2 my-3" style="width: 18rem;">
+                <div class="card-body p-0" id="name1">
+                    <p class="card-text"></p>
+                </div>
+                <div id="img1"></div>
+                <div class="card-body cb p-0">
+                    <p class="card-text" id="hp1"></p>
+                </div>
+            </div>
+            <div class="card col-4 border border-primary mx-2 my-3" style="width: 18rem;">
                 <div class="card-body p-0" id="name2">
                     <p class="card-text"></p>
                 </div>
@@ -53,41 +71,47 @@
                     <p class="card-text" id="hp2"></p>
                 </div>
             </div>
+
+            <div class="card col-4 border border-primary mx-2 my-3" style="width: 18rem;">
+                <div class="card-body p-0" id="name3">
+                    <p class="card-text"></p>
+                </div>
+                <div id="img3"></div>
+                <div class="card-body cb p-0">
+                    <p class="card-text" id="hp3"></p>
+                </div>
+            </div>
+
+            <div class="card col-4 border border-primary mx-2 my-3" style="width: 18rem;">
+                <div class="card-body p-0" id="name4">
+                    <p class="card-text"></p>
+                </div>
+                <div id="img4"></div>
+                <div class="card-body cb p-0">
+                    <p class="card-text" id="hp4"></p>
+                </div>
+            </div>
+
+
+
+            <div class="col-12" id="container_2"></div>
+            <div class="col-12" id="container_3"></div>
+            <div class="col-12 p-5" id="container_4"></div>
+
+            <div id="backgroundaudio">
+                <i class="fa fa-volume-up"></i>
+                <audio autoplay="" controls="" loop="" preload="">
+                    <source src=".\assests\sound\hero.wav" type="audio/wav"></source>
+                    <source src="your_website_url/Sunrise.mp3" type="audio/mpeg"></source>
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+
         </div>
-        <div class="row">
-
-            <div class="card col-6 border border-primary mx-2 my-1" style="width: 18rem;">
-                    <div class="card-body p-0" id="name3">
-                        <p class="card-text"></p>
-                    </div>
-                    <div id="img3"></div>
-                    <div class="card-body cb p-0">
-                        <p class="card-text" id="hp3"></p>
-                    </div>
-                </div>
-
-                <div class="card col-6 border border-primary mx-2 my-1" style="width: 18rem;">
-                        <div class="card-body p-0" id="name4">
-                            <p class="card-text"></p>
-                        </div>
-                        <div id="img4"></div>
-                        <div class="card-body cb p-0">
-                            <p class="card-text" id="hp4"></p>
-                        </div>
-                    </div>
-                </div>
-
-     <div class="col-12" id="container_2"></div>
-      <div class="col-12" id="container_3"></div>
-      <div class="col-12 p-5" id="container_4"></div>
-     
-
-       </div>     
-    </div>        
+    </div>
     <script type="text/JavaScript" src=".\assests\javascript\game.js"></script>
 
 </body>
-</html>
 
-    
-                   
+</html>

@@ -2,18 +2,19 @@ $(document).ready(function () {
 
     var charSound = new Audio("assests/sound/corona.mp3");
     var enemySound = new Audio("assests/sound/strike.mp3");
-    var attackSound = new Audio("assests/sound/confetti.mp3");
+    var attackSound = new Audio("assests/sound/flash-1.mp3");
+    var bgSound = new Audio("assests/sound/hero.wav");
 
     //object with all characters
     var heroes = {
         spiderman: {
             name: "Spiderman",
-            healthpoints: 20,
-            attackpoints: 20,
+            healthpoints: 260,
+            attackpoints: 5,
         },
         batman: {
             name: "Batman",
-            healthpoints: 200,
+            healthpoints: 55,
             attackpoints: 15,
         },
         wonderwoman: {
@@ -53,6 +54,7 @@ $(document).ready(function () {
     $("#hp4").attr('healthpoints', heroes.wonderwoman.healthpoints);
 
     //create 6 elements:
+    $(".popup-overlay").hide();
     var heroesTitle1 = $('<h2 class="p-0">Which is your favorite superhero?</h2>');
     heroesTitle1.appendTo('#container_1');
 
@@ -80,9 +82,9 @@ $(document).ready(function () {
     defender.hide();
 
     //<button> “reset” </button>(append to container_3)
-    var resetButton = $('<button>Reset</button>');
+    var resetButton = $('<button class="btn btn-light mx-2">Reset</button>');
     resetButton.addClass("btn btn-light");
-    resetButton.appendTo('#container_3');
+    resetButton.appendTo('#container_4');
     resetButton.hide();
 
     var results = $('<p1 class="display-4"></p1>');
@@ -90,7 +92,6 @@ $(document).ready(function () {
 
     var chooseEnemy = false;
     var chooseChar = true;
-    var attack = false;
 
     var calEHP;
     var calCAP;
@@ -102,6 +103,9 @@ $(document).ready(function () {
     $(".card").on("click", function () {
         console.log("choose char click before -enemy, char, attack" + chooseEnemy, chooseChar, attack);
         if (chooseEnemy === false && chooseChar === true) {
+            $("body, html").css("background-image", "url(assests/images/new_hero.jpg)")
+            heroesTitle.css("color", "white");
+            enemyToAttack.css("color", "white");
             charSound.play();
             heroesTitle1.hide();
             heroesTitle.show();
@@ -123,26 +127,27 @@ $(document).ready(function () {
             $(".card").appendTo("#container_2");
             $(".card").addClass("bg-danger enemy");
             $(".card").css("float", "left");
-
+            chooseEnemy = true;
+            chooseChar = false;
         }
-        chooseEnemy = true;
-        chooseChar = false;
         console.log("choose char click after -enemy, char, attack" + chooseEnemy, chooseChar, attack);
-
-
-
     });
+
+    var attack = false;
     var chosenEnemy;
     //$click event to choose enemy
     $("body").on("click", ".enemy", function () {
         //choose enemy=true
         console.log("choose enemy click before -enemy, char, attack" + chooseEnemy, chooseChar, attack);
         if (chooseEnemy === true && chooseChar === false) {
-            $("body").css("background-image", "url(assests/images/bg3.png)")
+            $("body, html").css("background-image", "url(assests/images/bg3.png)")
             enemySound.play();
             battleGround.show();
             attackButton.show();
             defender.show();
+            defender.css("color", "white");
+            $("h1").addClass("text-white");
+            results.hide();
             $(".card").removeClass("enemy");
             chosenEnemy = $(this);
             calEHP = heroes[chosenEnemy.find('[name]').attr('name')].healthpoints;
@@ -154,24 +159,21 @@ $(document).ready(function () {
             chosenEnemy.attr("id", "defender");
             //this defender appended to container-3
             chosenEnemy.appendTo("#container_3");
+            chooseEnemy = false;
             //attack button becomes active
-            attack = true;
-            console.log(attack);
-
         }
-        chooseEnemy = false;
-        console.log("choose enemy click after -enemy, char, attack" + chooseEnemy, chooseChar, attack);
+        attack = true;
+        console.log("choose enemy click after -enemy, char, attack " + chooseEnemy, chooseChar, attack);
     });
 
-    var counter=0;
+    var counter = 0;
     //click event attack button            
     $("#attack").on("click", function () {
         //chooseEnemy=false;
         attackSound.play();
-        $("body").css("background-image", "url(assests/images/bg1.jpg)");
-        $("h1").addClass("text-white");
-
-        if ((attack === true) && (chooseEnemy === false)) {    
+        results.show();
+        $("body, html").css("background-image", "url(assests/images/bg1.jpg)");
+        if ((attack === true) && (chooseEnemy === false)) {
             // enemyHP – characterPP
             calEHP = calEHP - calCAP;
 
@@ -192,34 +194,34 @@ $(document).ready(function () {
             results.text(attackText);
             results.appendTo("#container_3");
             results.css("color", "white");
-           
+
             if (calEHP <= 0) {
                 counter++;
                 console.log(counter);
                 attack = false;
                 //remove defender form screen
-                var nextChar="Good job! Choose a different enemy!";
+                var nextChar = "Good job! Choose a different enemy!";
+                attackButton.hide();
+                battleGround.hide();
                 results.text(nextChar);
+                defender.hide();
                 results.appendTo("#container_3");
-                chosenEnemy.removeAttr("style");
-                chosenEnemy.removeClass("border");
-                chosenEnemy.empty();
+            
+                $("div").remove('#defender');
 
                 //chosenEnemy=true;
                 chooseEnemy = true;
                 $(".card").addClass("enemy");
                 console.log("choose enemy click before -enemy, char, attack" + chooseEnemy, chooseChar, attack);
             }
-            if (counter===3) {
+            if (counter === 3) {
                 attackButton.hide();
                 win();
             }
             //(if characterHP<=0){
             if (calCHP <= 0) {
                 attack = false;
-                chosenEnemy.removeAttr("style");
-                chosenEnemy.removeClass("border");
-                chosenEnemy.empty();
+                $("div").remove('#defender');
                 //loose();
                 loose();
             }
@@ -229,22 +231,36 @@ $(document).ready(function () {
     function win() {
         //no more enemies
         //reset.show()
-        $("body").css("background-image", "url(assests/images/bg4.jpg)");
-        resetButton.show();
-        results.text("YOU WON! WAY TO SHOW YOUR HEROIC TALENTS!!");
+        battleGround.hide();
+        enemyToAttack.hide();
+        defender.hide();
+        $("body, html").css("background-image", "url(assests/images/bg4.jpg)");
+        results.text("YOU WON! WAY TO SHOW YOUR HEROIC SKILLS!!");
         results.css("color", "white");
         results.appendTo("#container_3");
+        resetButton.show();
     }
     //loose function
     function loose() {
         //reset.show();
+        $("body, html").css("background-image", "url(assests/images/hero_night.jpg)");
         results.text("TRY AGAIN!!");
         results.appendTo("#container_3");
         resetButton.show();
     }
 
     resetButton.on("click", function () {
+        bgSound.play();
         window.location.reload(true);
+    });
+    $(".open").on("click", function () {
+        $(".popup, .popup-content").addClass("active");
+        $(".popup-overlay").show();
+    });
+
+    $(".close, .popup").on("click", function () {
+        $(".popup, .popup-content").removeClass("active");
+        $(".popup-overlay").hide();
     });
 });
 

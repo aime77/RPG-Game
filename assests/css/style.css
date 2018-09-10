@@ -1,31 +1,89 @@
 body, html {
 background-image: url("../images/bg6.png");
-  background-repeat: repeat;
-  background-size: cover;
+background-repeat: repeat;
+background-size: cover;
 }
 
 .card-text{
-    font-family: 'Yanone Kaffeesatz', sans-serif;
-    font-size:20px;
+font-family: 'Yanone Kaffeesatz', sans-serif;
+font-size:20px;
 }
 
-
 h1{
-    font-family: 'Gloria Hallelujah', cursive;
-    
+font-family: 'Gloria Hallelujah', cursive;
+}
+
+h2{
+font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+p{
+font-family: 'Roboto Condensed', sans-serif;    
 }
 
 #bgTitle{
-    font-family: 'Ruslan Display', cursive;
-    color:red;
-    font-size: 50px;
+font-family: 'Ruslan Display', cursive;
+color:red;
+font-size: 50px;
 }
 
 .card-body{
-    font-size:20px;
+font-size:20px;
 }
 
 #header{
-    background-image: url("../images/bgimage.jpg");
-
+background-image: url("../images/bgimage.jpg");
 }
+
+.popup-overlay {
+visibility:hidden;
+}
+    
+.popup-content {
+visibility:hidden;
+}
+.popup-overlay.active{
+visibility:visible;
+}
+        
+.popup-content.active {
+visibility:visible;
+}
+
+#backgroundaudio { 
+    display: block; 
+    position: fixed; 
+    bottom: -43px; 
+    left: 5px; 
+    -webkit-transition: all 1s ease-in-out; 
+    -moz-transition: all 1s ease-in-out; 
+    -ms-transition: all 1s ease-in-out; 
+    -o-transition: all 1s ease-in-out; 
+    transition: all 1s ease-in-out; 
+    } 
+    #backgroundaudio:hover { 
+    bottom: 0; 
+    -webkit-transition: all 1s ease-in-out; 
+    -moz-transition: all 1s ease-in-out; 
+    -ms-transition: all 1s ease-in-out; 
+    -o-transition: all 1s ease-in-out; 
+    transition: all 1s ease-in-out; 
+    } 
+    #backgroundaudio audio { 
+    background: #ffffff; 
+    padding: 5px; 
+    display: table-cell; 
+    vertical-align: middle; 
+    height: 43px; 
+    z-index: 9998; 
+    } 
+    #backgroundaudio i { 
+    font-size: 40px; 
+    display: block; 
+    background: #ffffff; 
+    padding: 5px; 
+    width: 50px; 
+    float: none; 
+    margin-bottom: -1px; 
+    z-index: 9999; 
+    }
