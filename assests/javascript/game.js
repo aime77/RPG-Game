@@ -8,22 +8,22 @@ $(document).ready(function () {
     var heroes = {
         spiderman: {
             name: "Spiderman",
-            healthpoints: 120,
+            healthpoints: 20,
             attackpoints: 20,
         },
         batman: {
             name: "Batman",
-            healthpoints: 140,
+            healthpoints: 200,
             attackpoints: 15,
         },
         wonderwoman: {
-            name: "Wonder Women",
-            healthpoints: 160,
+            name: "Wonderwoman",
+            healthpoints: 70,
             attackpoints: 25,
         },
         superman: {
             name: "Superman",
-            healthpoints: 170,
+            healthpoints: 350,
             attackpoints: 10,
         }
     };
@@ -85,25 +85,30 @@ $(document).ready(function () {
     resetButton.appendTo('#container_3');
     resetButton.hide();
 
-    var results = $('<p1></p1>');
+    var results = $('<p1 class="display-4"></p1>');
     results.appendTo('#container_3');
 
     var chooseEnemy = false;
     var chooseChar = true;
-    var reset = true;
     var attack = false;
-    
+
+    var calEHP;
+    var calCAP;
+    var calEAP;
+    var calCHP;
 
     var chosenChar;
     //click event to choose character
     $(".card").on("click", function () {
-        console.log("choose char click before -enemy, char, attack"+chooseEnemy, chooseChar, attack);
+        console.log("choose char click before -enemy, char, attack" + chooseEnemy, chooseChar, attack);
         if (chooseEnemy === false && chooseChar === true) {
             charSound.play();
             heroesTitle1.hide();
             heroesTitle.show();
             enemyToAttack.show();
             chosenChar = $(this);
+            calCAP = heroes[chosenChar.find('[name]').attr('name')].attackpoints;
+            calCHP = heroes[chosenChar.find('[name]').attr('name')].healthpoints;
             //CharacterTEXT appends to container 1 top
             chosenChar.attr("id", "selectedchar");
             heroesTitle.appendTo("#container_1");
@@ -122,8 +127,8 @@ $(document).ready(function () {
         }
         chooseEnemy = true;
         chooseChar = false;
-        console.log("choose char click after -enemy, char, attack"+chooseEnemy, chooseChar, attack);
-        
+        console.log("choose char click after -enemy, char, attack" + chooseEnemy, chooseChar, attack);
+
 
 
     });
@@ -131,7 +136,7 @@ $(document).ready(function () {
     //$click event to choose enemy
     $("body").on("click", ".enemy", function () {
         //choose enemy=true
-        console.log("choose enemy click before -enemy, char, attack"+chooseEnemy, chooseChar, attack);
+        console.log("choose enemy click before -enemy, char, attack" + chooseEnemy, chooseChar, attack);
         if (chooseEnemy === true && chooseChar === false) {
             $("body").css("background-image", "url(assests/images/bg3.png)")
             enemySound.play();
@@ -140,8 +145,11 @@ $(document).ready(function () {
             defender.show();
             $(".card").removeClass("enemy");
             chosenEnemy = $(this);
+            calEHP = heroes[chosenEnemy.find('[name]').attr('name')].healthpoints;
+            calEAP = heroes[chosenEnemy.find('[name]').attr('name')].attackpoints;
+            console.log(chosenEnemy.children("card-body"));
             //add class .defender to this (dark blue background, blue border)
-            chosenEnemy.removeClass("bg-danger card");
+            chosenEnemy.removeClass("bg-danger card mx-7");
             chosenEnemy.css("background-color", "yellow");
             chosenEnemy.attr("id", "defender");
             //this defender appended to container-3
@@ -155,56 +163,66 @@ $(document).ready(function () {
         console.log("choose enemy click after -enemy, char, attack" + chooseEnemy, chooseChar, attack);
     });
 
+    var counter=0;
     //click event attack button            
     $("#attack").on("click", function () {
         //chooseEnemy=false;
         attackSound.play();
         $("body").css("background-image", "url(assests/images/bg1.jpg)");
         $("h1").addClass("text-white");
-        console.log(heroes[chosenEnemy.find('[name]').attr('name')].healthpoints);
 
-        console.log(attack, chooseEnemy);
-
-        var calEHP = heroes[chosenEnemy.find('[name]').attr('name')].healthpoints;
-        var calCAP = heroes[chosenChar.find('[name]').attr('name')].attackpoints;
-        var calEAP = heroes[chosenEnemy.find('[name]').attr('name')].attackpoints;
-        var calCHP = heroes[chosenChar.find('[name]').attr('name')].healthpoints;
-
-        if ((attack === true) && (chooseEnemy === false)) {
-
-            //If enemyHP<=0{
-            if ((calCHP === 200)) {
-                attackButton.hide();
-                win();
-            }
-            else if (calEHP <= 0) {
-                attack = false;
-                //remove defender form screen
-                chosenEnemy.remove();
-                //chosenEnemy=true;
-                chooseEnemy = true;
-            }
-            //(if characterHP<=0){
-            if (calCHP <= 0) {
-                attack = false;
-                //loose();
-                loose();
-            }
-
-            
+        if ((attack === true) && (chooseEnemy === false)) {    
             // enemyHP – characterPP
             calEHP = calEHP - calCAP;
-            
-            $("#defender").append(calEHP);
+
+            $("#defender").children(".cb").text(calEHP);
 
             console.log(calEHP);
             // characeterHP – enemyPP
             calCHP = calCHP - calEAP;
-            $("#selectedchar").append(calCHP);
+            calCAP = calCAP * 2;
+            console.log("update " + calCAP);
 
+            $("#selectedchar").children(".cb").text(calCHP);
             console.log(calCHP, calEHP);
             //for loop to increase chosenChar attack power
 
+            var attackText = "You attacked " + heroes[chosenEnemy.find('[name]').attr('name')].name + " for " + calCAP + " damage. " + heroes[chosenEnemy.find('[name]').attr('name')].name + " attacked you back for " + calEAP + " damage.";
+            console.log(attackText);
+            results.text(attackText);
+            results.appendTo("#container_3");
+            results.css("color", "white");
+           
+            if (calEHP <= 0) {
+                counter++;
+                console.log(counter);
+                attack = false;
+                //remove defender form screen
+                var nextChar="Good job! Choose a different enemy!";
+                results.text(nextChar);
+                results.appendTo("#container_3");
+                chosenEnemy.removeAttr("style");
+                chosenEnemy.removeClass("border");
+                chosenEnemy.empty();
+
+                //chosenEnemy=true;
+                chooseEnemy = true;
+                $(".card").addClass("enemy");
+                console.log("choose enemy click before -enemy, char, attack" + chooseEnemy, chooseChar, attack);
+            }
+            if (counter===3) {
+                attackButton.hide();
+                win();
+            }
+            //(if characterHP<=0){
+            if (calCHP <= 0) {
+                attack = false;
+                chosenEnemy.removeAttr("style");
+                chosenEnemy.removeClass("border");
+                chosenEnemy.empty();
+                //loose();
+                loose();
+            }
         }
     });
     //win function
@@ -215,12 +233,13 @@ $(document).ready(function () {
         resetButton.show();
         results.text("YOU WON! WAY TO SHOW YOUR HEROIC TALENTS!!");
         results.css("color", "white");
-        results.appendTo("#container_4");
+        results.appendTo("#container_3");
     }
     //loose function
     function loose() {
         //reset.show();
-        results.text("YOU WON! WAY TO SHOW YOUR HEROIC TALENTS!!")
+        results.text("TRY AGAIN!!");
+        results.appendTo("#container_3");
         resetButton.show();
     }
 

@@ -6,7 +6,7 @@ background-image: url("../images/bg6.png");
 
 .card-text{
     font-family: 'Yanone Kaffeesatz', sans-serif;
-    
+    font-size:20px;
 }
 
 
@@ -19,4 +19,13 @@ h1{
     font-family: 'Ruslan Display', cursive;
     color:red;
     font-size: 50px;
+}
+
+.card-body{
+    font-size:20px;
+}
+
+#header{
+    background-image: url("../images/bgimage.jpg");
+
 }
